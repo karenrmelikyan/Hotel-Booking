@@ -20,7 +20,7 @@ app.use('/api/hotels', hotelsRoute);
 app.use('/api/rooms', roomsRoute);
 
 // Routes errors handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     const errorStatus = err.status || 500;
     const errMessage = err.message || 'Something went wrong';
     return res.status(errorStatus).json({
