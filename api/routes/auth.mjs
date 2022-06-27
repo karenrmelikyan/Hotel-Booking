@@ -1,5 +1,5 @@
 import express from "express";
-import {register, login} from "../controllers/auth.mjs";
+import {register, login, logout} from "../controllers/auth.mjs";
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ router.post('/register', register);
 
 // LOGIN
 router.post('/login', login);
+
+// LOGOUT
+router.get('/logout', logout);
 
 export default router;

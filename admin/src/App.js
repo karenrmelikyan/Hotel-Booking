@@ -1,19 +1,17 @@
-import {
-    BrowserRouter,
-    Route,
-    Routes,
-    Navigate,
-} from "react-router-dom";
-import Rooms from "./pages/Rooms";
+import Users from "./pages/users/Users";
 import Hotels from "./pages/Hotels";
-import Users from "./pages/Users";
+import Rooms from "./pages/Rooms";
 import Login from "./pages/login/Login";
+import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
+import {AdminContext} from "./context/AdminContext";
+import {useContext} from "react";
 
 function App() {
+    const {admin} = useContext(AdminContext);
+
     function ProtectedRoute({children}) {
-        const admin = JSON.parse(localStorage.getItem('admin')) || null;
         if(!admin) {
-            return <Navigate to="/login"/>
+            return <Navigate to="/login" />
         }
 
         return children;
@@ -24,7 +22,7 @@ function App() {
             <Routes>
                 <Route path="/users" element={
                     <ProtectedRoute>
-                       <Users/>
+                        <Users/>
                     </ProtectedRoute>
                 }/>
 

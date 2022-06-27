@@ -1,10 +1,11 @@
 import './login.css';
 import BasicTextFields from "../../components/BasicTextField";
 import MainButton from "../../components/MainButton";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import useValidate from "../../hooks/useValidate";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {AdminContext} from "../../context/AdminContext";
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -13,9 +14,13 @@ const Login = () => {
     const [passErrMessage, setPassErrMessage] = useState('');
     const [userEmptyErr, userMinLengthErr] = useValidate(username, {minLength: 2, isEmpty: false});
     const [passEmptyErr, passMinLengthErr] = useValidate(password, {minLength: 3, isEmpty: false});
+
+    const {dispatch} = useContext(AdminContext);
     const navigate = useNavigate();
 
-    async function clickHandler() {
+    async function clickHandler(e) {
+        e.preventDefault();
+
         if (userEmptyErr) {
             setUserErrMessage('Username can`t be empty');
             setPassErrMessage('');
@@ -36,10 +41,16 @@ const Login = () => {
 
         setUserErrMessage('');
         setPassErrMessage('');
-        const res = await axios.post('/auth/login', {username, password});
-        if (res.data.isAdmin) {
-            localStorage.setItem('admin', JSON.stringify(res.data));
-            navigate('/users');
+
+        dispatch({type: 'LOGIN_START'});
+        try {
+            const res = await axios.post('/auth/login', {username, password});
+            if (res.data.isAdmin) {
+                dispatch({type: 'LOGIN_SUCCESS', payload: res.data.details});
+                navigate('/users');
+            }
+        } catch (err) {
+            dispatch({type: 'LOGIN_FAILURE', payload: err.response.data});
         }
     }
 
