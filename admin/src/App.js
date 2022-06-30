@@ -1,6 +1,6 @@
 import Users from "./pages/users/Users";
-import Hotels from "./pages/Hotels";
-import Rooms from "./pages/Rooms";
+import Hotels from "./pages/hotels/Hotels";
+import Rooms from "./pages/rooms/Rooms";
 import Login from "./pages/login/Login";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 import {AdminContext} from "./context/AdminContext";

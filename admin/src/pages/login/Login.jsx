@@ -1,6 +1,6 @@
 import './login.css';
-import BasicTextFields from "../../components/BasicTextField";
-import MainButton from "../../components/MainButton";
+import BasicTextFields from "../../components/inputs/BasicTextField";
+import MainButton from "../../components/buttons/mainButton/MainButton";
 import {useContext, useState} from "react";
 import useValidate from "../../hooks/useValidate";
 import axios from "axios";

@@ -1,10 +1,11 @@
-import Header from "../../components/Header";
+import Header from "../../components/header/Header";
+import UsersContent from "../../components/contents/UsersContent";
 
 const Users = () => {
     return (
-        <div>
-            Users
-            <Header />
+        <div className={'content-container'}>
+            <Header title={'Users'}/>
+            <UsersContent />
         </div>
     );
 };

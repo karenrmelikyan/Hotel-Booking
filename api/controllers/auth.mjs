@@ -42,16 +42,6 @@ export async function login(req, res, next) {
     }
 }
 
-export async function logout(req, res, next) {
-    const token = req.cookies.access_token;
-    if (!token) {
-        return next(createError(401, "You are not authenticated!"));
-    }
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, userData) => {
-        if (err) {
-            return next(createError(403, "Token is not valid!"));
-        }
-
-        res.clearCookie('access_token').status(200).json();
-    });
+export async function logout(req, res) {
+    res.clearCookie('access_token').status(200).json();
 }

@@ -18,9 +18,10 @@ export default function useValidate(value, validators) {
                         ? setEmptyErr(false)
                         : setEmptyErr(true)
                     break;
+                default: return;
             }
         }
-    }, [value])
+    }, [value, validators])
 
     return [emptyErr, minLengthErr];
 }
