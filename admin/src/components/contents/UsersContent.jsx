@@ -3,7 +3,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import AlertDialog from "../dialogs/AlertDialog";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
-import './content.css'
 
 export default function UsersContent() {
     const {data, reFetch} = useFetch('/users');
@@ -16,7 +15,7 @@ export default function UsersContent() {
         {field: 'country', headerName: 'Country', width: 150, disableClickEventBubbling: true},
         {field: 'city', headerName: 'City', width: 150, disableClickEventBubbling: true},
         {field: 'phone', headerName: 'Phone Number', width: 150, disableClickEventBubbling: true},
-        {field: 'actions', headerName: 'Actions', width: 150,  renderCell: buttonGroup},
+        {field: 'actions', headerName: 'Actions', width: 150,  renderCell: buttonsGroup},
     ];
 
     // Data initial
@@ -43,7 +42,7 @@ export default function UsersContent() {
         }
     }
 
-    function buttonGroup(params) {
+    function buttonsGroup(params) {
         return (
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <AlertDialog
@@ -52,7 +51,7 @@ export default function UsersContent() {
                     title={'Delete'}
                     text={`Are you sure that want delete ${params.row.id} user?`}
                     yesHandler={deleteUser}
-                    userId={params.row.id}
+                    id={params.row.id}
                 />
             </ButtonGroup>
         )

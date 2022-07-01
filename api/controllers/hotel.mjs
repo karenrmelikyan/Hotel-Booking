@@ -13,7 +13,7 @@ export async function createHotel(req, res, next) {
 
 export async function updateHotel(req, res, next) {
     try{
-        const updatedHotel = await Hotel.findOneAndUpdate(
+        const updatedHotel = await Hotel.findByIdAndUpdate(
             req.params.id,
             {$set: req.body},
             {new: true},

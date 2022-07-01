@@ -1,9 +1,11 @@
-import React from 'react';
+import Header from "../../components/header/Header";
+import HotelsContent from "../../components/contents/HotelsContent";
 
 const Hotels = () => {
     return (
-        <div>
-            Hotels
+        <div style={{padding: '0.1% 1%'}}>
+            <Header title={'Hotels'}/>
+            <HotelsContent />
         </div>
     );
 };

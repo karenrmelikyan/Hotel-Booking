@@ -14,7 +14,7 @@ export default function AlertDialog(props) {
     };
 
     function handleYes() {
-        props.yesHandler(props.userId);
+        props.yesHandler(props.id);
         setOpen(false);
     }
 
