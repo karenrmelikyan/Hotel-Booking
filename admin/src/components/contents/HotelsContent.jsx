@@ -97,7 +97,7 @@ export default function HotelsContent() {
                     color={'Red'}
                     buttonName={'X'}
                     title={'Delete'}
-                    text={`Are you sure that want delete ${params.row.id} user?`}
+                    text={`Are you sure that want delete ${params.row.id} hotel?`}
                     yesHandler={deleteHotel}
                     id={params.row.id}
                 />

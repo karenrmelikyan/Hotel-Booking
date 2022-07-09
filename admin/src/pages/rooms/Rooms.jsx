@@ -1,9 +1,12 @@
 import React from 'react';
+import Header from "../../components/header/Header";
+import RoomsContent from "../../components/contents/RoomsContent";
 
 const Rooms = () => {
     return (
-        <div>
-            Rooms
+        <div style={{padding: '0.1% 20%'}}>
+            <Header title={'Rooms'}/>
+            <RoomsContent />
         </div>
     );
 };

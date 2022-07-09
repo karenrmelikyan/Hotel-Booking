@@ -6,9 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from "axios";
 import {useState} from "react";
 
-export default function AddHotelDialog(props) {
+export default function EditHotelDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -19,8 +20,20 @@ export default function AddHotelDialog(props) {
     const [desc, setDesc] = useState('');
     const [cheapestPrice, setCheapestPrice] = useState('');
 
-    function handleClickOpen() {
-        setOpen(true);
+    async function handleClickOpen() {
+        const res = await axios.get(`/hotels/find/${props.id}`);
+        if (res.status === 200) {
+            setName(res.data.name);
+            setType(res.data.type);
+            setCity(res.data.city);
+            setAddress(res.data.address);
+            setDistance(res.data.distance);
+            setTitle(res.data.title);
+            setDesc(res.data.desc);
+            setCheapestPrice(res.data.cheapestPrice);
+
+            setOpen(true);
+        }
     }
 
     function handleClose() {
@@ -28,22 +41,21 @@ export default function AddHotelDialog(props) {
         setOpen(false);
     }
 
-    async function handleSave() {
+    async function handleUpdate() {
         const hotel = {
-            name,
-            type,
-            city,
-            address,
-            distance,
-            title,
-            desc,
-            cheapestPrice,
+            "name": name,
+            "type": type,
+            "city": city,
+            "address": address,
+            "distance": distance,
+            "title": title,
+            "desc": desc,
+            "cheapestPrice": cheapestPrice,
         }
 
         // invoke function from parent
-        // element HotelContent
-        props.saveHandler(hotel);
-
+        // element HotelsContent
+        props.updateHandler(props.id, hotel);
         resetAllFields();
         setOpen(false);
     }
@@ -62,16 +74,16 @@ export default function AddHotelDialog(props) {
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Add Hotel
+                Edit
             </Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add Hotel</DialogTitle>
+                <DialogTitle>Edit Hotel</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         -----------------
                     </DialogContentText>
 
-                     <TextField
+                    <TextField
                         autoFocus
                         margin="dense"
                         id='name'
@@ -170,7 +182,7 @@ export default function AddHotelDialog(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSave}>Save</Button>
+                    <Button onClick={handleUpdate}>Update</Button>
                 </DialogActions>
             </Dialog>
         </div>

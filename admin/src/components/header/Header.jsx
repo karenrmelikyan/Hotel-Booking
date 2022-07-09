@@ -7,6 +7,7 @@ import {AdminContext} from "../../context/AdminContext";
 import {useContext} from "react";
 import SecondaryButton from "../buttons/secondaryButton/SecondaryButton";
 import Label from "../label/Label";
+import PositionedMenu from "../menu/PositionedMenu";
 
 const Item = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -36,7 +37,9 @@ export default function Header(props) {
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={3}>
                 <Grid item xs={3}>
-                    <Item></Item>
+                    <Item style={{textAlign: 'left'}}>
+                       <PositionedMenu />
+                    </Item>
                 </Grid>
                 <Grid item xs={6}>
                     <Item>

@@ -3,7 +3,7 @@ import HotelsContent from "../../components/contents/HotelsContent";
 
 const Hotels = () => {
     return (
-        <div style={{padding: '0.1% 1%'}}>
+        <div style={{padding: '0.1% 20%'}}>
             <Header title={'Hotels'}/>
             <HotelsContent />
         </div>

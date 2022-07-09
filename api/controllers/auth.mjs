@@ -33,6 +33,8 @@ export async function login(req, res, next) {
 
         // hide password and isAdmin from response
         const {password, isAdmin, ...otherDetails} = user._doc;
+
+        // set cookies
         res.cookie('access_token', token, {httpOnly: true})
             .status(200)
             .json({details: {...otherDetails}, isAdmin})
