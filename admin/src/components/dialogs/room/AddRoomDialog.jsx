@@ -35,7 +35,6 @@ export default function AddRoomDialog(props) {
     const [roomNumbers, setRoomNumbers] = useState([]);
     const [hotelID, setHotelID] = useState(null);
 
-
     function handleOpenRoom() {
         setOpenRoom(true);
         setOpenHotels(false);
@@ -53,9 +52,10 @@ export default function AddRoomDialog(props) {
 
     async function handleSave() {
         //create properly array of room numbers
-        const rNumbers = roomNumbers.map((number) => {
+        let rNumbers = roomNumbers.filter((number) => Number(number));
+        rNumbers = rNumbers.map((number) => {
             if (number > 0) {
-                return {'number': Number(number)};
+                return {'number': number};
             }
 
             return 0;

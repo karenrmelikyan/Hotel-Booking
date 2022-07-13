@@ -1,6 +1,6 @@
 import { DataGrid } from '@mui/x-data-grid';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import AlertDialog from "../dialogs/AlertDialog";
+import DeleteUserDialog from "../dialogs/user/DeleteUserDialog";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ export default function UsersContent() {
     function buttonsGroup(params) {
         return (
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <AlertDialog
+                <DeleteUserDialog
                     color={'Red'}
                     buttonName={'Delete'}
                     title={'Delete'}

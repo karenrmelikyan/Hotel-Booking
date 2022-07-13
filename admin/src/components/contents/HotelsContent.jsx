@@ -2,9 +2,22 @@ import { DataGrid } from '@mui/x-data-grid';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import AddHotelDialog from "../dialogs/hotel/AddHotelDialog";
 import EditHotelDialog from "../dialogs/hotel/EditHotelDialog";
-import AlertDialog from "../dialogs/AlertDialog";
+import AddRoomDialog from "../dialogs/room/AddRoomDialog";
+import RoomsDialog from "../dialogs/room/RoomsDialog";
+import DeleteHotelDialog from "../dialogs/hotel/DeleteHotelDialog";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import {styled} from "@mui/material/styles";
+
+const Item = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 export default function HotelsContent() {
     const {data, reFetch} = useFetch('/hotels');
@@ -21,7 +34,6 @@ export default function HotelsContent() {
         {field: 'title', headerName: 'Title', width: 100, disableClickEventBubbling: true},
         {field: 'desc', headerName: 'Description', width: 150, disableClickEventBubbling: true},
         {field: 'rating', headerName: 'Rating', width: 100, disableClickEventBubbling: true},
-        {field: 'rooms', headerName: 'Rooms', width: 100, disableClickEventBubbling: true},
         {field: 'cheapestPrice', headerName: 'Price', width: 100, disableClickEventBubbling: true},
         {field: 'featured', headerName: 'Featured', width: 100, disableClickEventBubbling: true},
         {field: 'actions', headerName: 'Actions', width: 300,  renderCell: buttonsGroup},
@@ -41,7 +53,6 @@ export default function HotelsContent() {
             title: hotel.title,
             desc: hotel.desc,
             rating: hotel.rating,
-            rooms: hotel.rooms,
             cheapestPrice: hotel.cheapestPrice,
             featured: hotel.featured,
         });
@@ -80,9 +91,22 @@ export default function HotelsContent() {
         }
     }
 
+    async function saveRoom(room, hotelID) {
+        try {
+            await axios.post(`/rooms/${hotelID}`, room);
+            await reFetch();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     function buttonsGroup(params) {
         return (
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                {/*Rooms*/}
+                <RoomsDialog
+                     hotelID={params.row.id}
+                />
 
                 {/* EDIT */}
                 <EditHotelDialog
@@ -93,16 +117,16 @@ export default function HotelsContent() {
                 />
 
                 {/* DELETE */}
-                <AlertDialog
+                <DeleteHotelDialog
                     color={'Red'}
-                    buttonName={'X'}
+                    buttonName={'Delete'}
                     title={'Delete'}
                     text={`Are you sure that want delete ${params.row.id} hotel?`}
                     yesHandler={deleteHotel}
                     id={params.row.id}
                 />
             </ButtonGroup>
-        )
+        );
     }
 
     return (
@@ -113,13 +137,27 @@ export default function HotelsContent() {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
             />
-            <div style={{textAlign: 'right'}}>
-                <AddHotelDialog
-                    // pass saveHotel function to
-                    // child elem. by reference
-                    saveHandler={saveHotel}
-                />
-            </div>
+
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={3}>
+                        <Item style={{textAlign: 'left'}}>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Item>
+                        </Item>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Item style={{textAlign: 'right'}}>
+                            <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                                <AddRoomDialog saveHandler={saveRoom} />
+                                <AddHotelDialog saveHandler={saveHotel} />
+                            </ButtonGroup>
+                        </Item>
+                    </Grid>
+                </Grid>
+            </Box>
         </div>
     );
 }

@@ -4,7 +4,7 @@ import RoomsContent from "../../components/contents/RoomsContent";
 
 const Rooms = () => {
     return (
-        <div style={{padding: '0.1% 20%'}}>
+        <div>
             <Header title={'Rooms'}/>
             <RoomsContent />
         </div>

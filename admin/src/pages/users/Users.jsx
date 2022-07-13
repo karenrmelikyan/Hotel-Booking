@@ -3,7 +3,7 @@ import UsersContent from "../../components/contents/UsersContent";
 
 const Users = () => {
     return (
-        <div style={{padding: '0.1% 20%'}}>
+        <div>
             <Header title={'Users'}/>
             <UsersContent />
         </div>

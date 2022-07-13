@@ -1,22 +1,22 @@
 import { DataGrid } from '@mui/x-data-grid';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import AddRoomDialog from "../dialogs/room/AddRoomDialog";
-import AlertDialog from "../dialogs/AlertDialog";
+import EditRoomDialog from "../dialogs/room/EditRoomDialog";
+import DeleteRoomDialog from "../dialogs/room/DeleteRoomDialog";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
-export default function RoomsContent() {
-    const {data, reFetch} = useFetch('/rooms');
+export default function RoomsContent(props) {
+    const {data, reFetch} = useFetch(`/hotels/rooms/${props.hotelID}`);
 
     // Table initial
     const columns = [
-        {field: 'id', headerName: 'ID', width: 230, disableClickEventBubbling: true},
-        {field: 'title', headerName: 'Title', width: 150, disableClickEventBubbling: true},
-        {field: 'desc', headerName: 'Description', width: 150, disableClickEventBubbling: true},
-        {field: 'maxPeople', headerName: 'Maximum People', width: 150, disableClickEventBubbling: true},
-        {field: 'price', headerName: 'Price', width: 150, disableClickEventBubbling: true},
-        {field: 'roomNumbers', headerName: 'Room Numbers', width: 150, disableClickEventBubbling: true},
-        {field: 'actions', headerName: 'Actions', width: 300,  renderCell: buttonsGroup},
+        // {field: 'id', headerName: 'ID', width: 230, disableClickEventBubbling: true},
+        {field: 'title', headerName: 'Title', width: 100, disableClickEventBubbling: true},
+        {field: 'desc', headerName: 'Descrip.', width: 100, disableClickEventBubbling: true},
+        {field: 'maxPeople', headerName: 'Max People', width: 100, disableClickEventBubbling: true},
+        {field: 'price', headerName: 'Price', width: 100, disableClickEventBubbling: true},
+        {field: 'roomNumbers', headerName: 'Numbers', width: 100, disableClickEventBubbling: true},
+        {field: 'actions', headerName: 'Actions', width: 200,  renderCell: buttonsGroup},
     ];
 
     // Data initial
@@ -28,18 +28,16 @@ export default function RoomsContent() {
             desc: room.desc,
             maxPeople: room.maxPeople,
             price: room.price,
-            roomNumbers: room.roomNumbers,
+            roomNumbers: room.roomNumbers.map((elem) => String(elem.number)),
         });
     });
 
-    async function saveRoom(room, hotelID) {
+    async function deleteRoom(roomID, hotelID) {
         try {
-            const res = await axios.post(`/rooms/${hotelID}`, room)
-                if (res.status === 200) {
-                    await reFetch();
-                }
+            await axios.delete(`/rooms/${roomID}/${hotelID}`);
+            await reFetch();
         } catch (err) {
-            console.log(err);
+
         }
     }
 
@@ -47,22 +45,21 @@ export default function RoomsContent() {
         return (
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
 
-                {/* EDIT */}
-                {/*<EditRoomDialog*/}
-                {/*    // pass updateHotel function*/}
-                {/*    // to child elem. by reference*/}
-                {/*    updateHandler={updateRoom}*/}
-                {/*    id={params.row.id}*/}
-                {/*/>*/}
+                {/* EDIT*/}
+                <EditRoomDialog
+                    reFetch={reFetch}
+                    roomID={params.row.id}
+                />
 
                 {/* DELETE */}
-                <AlertDialog
+                <DeleteRoomDialog
                     color={'Red'}
                     buttonName={'X'}
                     title={'Delete'}
                     text={`Are you sure that want delete ${params.row.id} room?`}
-                    // yesHandler={deleteRoom}
-                    id={params.row.id}
+                    yesHandler={deleteRoom}
+                    roomID={params.row.id}
+                    hotelID={props.hotelID}
                 />
             </ButtonGroup>
         )
@@ -76,9 +73,6 @@ export default function RoomsContent() {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
             />
-            <div style={{textAlign: 'right'}}>
-                <AddRoomDialog saveHandler={saveRoom}/>
-            </div>
         </div>
     );
 }

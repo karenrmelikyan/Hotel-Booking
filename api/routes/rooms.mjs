@@ -20,7 +20,7 @@ router.put('/availability/:id', updateRoomAvailability)
 // DELETE
 router.delete('/:id/:hotelid', verifyAdmin, deleteRoom);
 
-// GET
+// GET ONE
 router.get('/:id', getRoom);
 
 // GET ALL

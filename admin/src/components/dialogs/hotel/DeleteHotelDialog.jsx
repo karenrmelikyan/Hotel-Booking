@@ -6,12 +6,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog(props) {
+export default function DeleteHotelDialog(props) {
     const [open, setOpen] = React.useState(false);
 
     function handleClickOpen() {
         setOpen(true);
-    };
+    }
 
     function handleYes() {
         props.yesHandler(props.id);
@@ -42,8 +42,8 @@ export default function AlertDialog(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleNo}>No</Button>
-                    <Button onClick={handleYes} autoFocus>Yes</Button>
+                    <Button onClick={handleNo} autoFocus >No</Button>
+                    <Button onClick={handleYes}>Yes</Button>
                 </DialogActions>
             </Dialog>
         </div>
