@@ -1,6 +1,5 @@
 import Users from "./pages/users/Users";
 import Hotels from "./pages/hotels/Hotels";
-import Rooms from "./pages/rooms/Rooms";
 import Login from "./pages/login/Login";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 import {AdminContext} from "./context/AdminContext";
@@ -29,12 +28,6 @@ function App() {
                 <Route path="/hotels" element={
                     <ProtectedRoute>
                         <Hotels/>
-                    </ProtectedRoute>
-                }/>
-
-                <Route path="/rooms" element={
-                    <ProtectedRoute>
-                        <Rooms/>
                     </ProtectedRoute>
                 }/>
 

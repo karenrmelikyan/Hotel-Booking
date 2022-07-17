@@ -118,13 +118,9 @@ export default function EditRoomDialog(props) {
                         type="text"
                         fullWidth
                         variant="standard"
-                        value={''}
-                    // onChange={(e) => {
-                    //     const str = e.target.value;
-                    //     if (str.includes(',')) {
-                    //         setRoomNumbers(str.split(','));
-                    //     }
-                    // }}
+                        value={
+                            roomNumbers.map((roomNumber) => roomNumber?.number)
+                        }
                     />
 
                     <TextField

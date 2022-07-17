@@ -27,12 +27,6 @@ export default function PositionedMenu() {
         setAnchorEl(null);
     }
 
-    function goToRooms() {
-        navigate('/rooms');
-        setAnchorEl(null);
-    }
-
-
     return (
         <div>
             <Button
@@ -61,7 +55,6 @@ export default function PositionedMenu() {
             >
                 <MenuItem onClick={goToUsers}>Users</MenuItem>
                 <MenuItem onClick={goToHotels}>Hotels</MenuItem>
-                <MenuItem onClick={goToRooms}>Rooms</MenuItem>
             </Menu>
         </div>
     );
